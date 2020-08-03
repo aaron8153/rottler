@@ -58,4 +58,25 @@
                   %p#price Price
           .modal-footer
             %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+    #work_order_time_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "work_order_modal", :role => "dialog", :tabindex => "-1"}
+      .modal-dialog{:role => "document"}
+        .modal-content
+          .modal-header
+            %h4.modal-title Time to Previous/Next Work Order
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            .container-fluid
+              .row
+                .col-5
+                  %h5 Time Since Last Work Order:
+                .col-7
+                  %p#time-since
+              .row
+                .col-5
+                  %h5 Time Until Next Work Order:
+                .col-7
+                  %p#time-til
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
 = javascript_pack_tag 'work_orders'

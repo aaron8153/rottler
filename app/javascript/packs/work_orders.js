@@ -19,11 +19,13 @@ $(document).ready(function(){
         jquery('#work_order_modal').modal('show');
     });
 
-    $('th.empty_slot').hover(function (e) {
-        var tech_id = $(this).data("tech-id");
-        var time_since_previous = $(this).data("time-since-previous");
-        var next_work_order = $(this).closest("").next(".first_filled_slot[data-tech-id=" + tech_id + "]");
+    $('th.empty_slot').click(function (e) {
+        var previous_time = $(this).data("time-since-previous");
+        var next_time = $(this).data("time-to-next");
 
-        console.log(next_work_order);
+        $('#work_order_time_modal #time-since').html(previous_time);
+        $('#work_order_time_modal #time-til').html(next_time)
+
+        jquery('#work_order_time_modal').modal('show');
     })
 });

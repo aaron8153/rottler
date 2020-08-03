@@ -3,7 +3,9 @@
 th {
   text-align: center;
   &.empty_slot {
-
+    &:hover {
+      cursor: pointer;
+    }
   }
   &.filled_slot {
     background: #2E2F30;

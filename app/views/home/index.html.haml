@@ -9,26 +9,50 @@
         %th{:scope => "col"}= t[:name]
   %tbody
     - current_time = 0
-    - 96.times do
+    - 288.times do
       %tr
         %th
           = Time.at(current_time.minutes).utc.strftime("%H:%M %p")
+
         - @technicians.each do |tech|
-          - technician_work_orders = @work_orders.where(technician_id: tech[:id], time: DateTime.parse("2010-01-19") + current_time.minutes )
-          - if technician_work_orders.empty?
-            - if tech[:wo_duration_slots] > 0
-              %th.filled_slot{:data => {:wo_id => tech[:wo_id], :tech_id => tech[:id]}}
-              - tech[:wo_duration_slots] = tech[:wo_duration_slots] - 1
-            -else
-              - if tech[:first_wo_found] == true
-                - tech[:time_since_previous] = tech[:time_since_previous].to_i + 15
-              %th.empty_slot{:data => {:time_since_previous => tech[:time_since_previous], :tech_id => tech[:id]}}
-          - else
-            - tech[:time_since_previous] = 0
-            - tech[:first_wo_found] = true
-            - technician_work_orders.each do |wo|
+          - wo_found = false
+          - if @techs[tech.id][:next_time].nil?
+            - @techs[tech.id][:next_time] = tech.work_orders[0][:time]
+          - tech.work_orders.each_with_index do |wo, index|
+            - break if wo_found
+            - if wo.time == DateTime.parse("2010-01-19") + current_time.minutes
+              - wo_found = true
+              - @techs[tech.id][:current_wo] = wo
+              - @techs[tech.id][:first_wo_found] = true
+              - @techs[tech.id][:previous_time] = wo.time
+              - if !tech.work_orders[index + 1].nil?
+                - @techs[tech.id][:next_time] = tech.work_orders[index + 1][:time]
               %th.filled_slot.first_filled_slot{:data => {:wo_id => wo.id, :tech_id => tech[:id], :name => wo.location.name, :city => wo.location.city, :time => wo.time, :duration => wo.duration.to_s + "m", :price => number_to_currency(wo.price)}}
                 %h5= wo.location.name
-              - tech[:wo_duration_slots] = (wo.duration / 15) - 1
-              - tech[:wo_id] = wo.id
-      - current_time = current_time + 15
+              - @techs[tech.id][:wo_duration_slots] = (wo.duration / 5) - 1
+              - @techs[tech.id][:wo_id] = wo.id
+            - else
+              - if !tech.work_orders[0].nil?
+                - @techs[tech.id][:time_to_next] = tech.work_orders[0][:time]
+          - if !wo_found
+            - if @techs[tech.id][:wo_duration_slots] > 0
+              %th.filled_slot{:data => {:wo_id => @techs[tech.id][:current_wo].id, :tech_id => tech.id}}
+              - @techs[tech.id][:wo_duration_slots] = @techs[tech.id][:wo_duration_slots] - 1
+            -else
+              - if @techs[tech.id][:first_wo_found] == true
+                - @techs[tech.id][:time_since_previous] = @techs[tech.id][:time_since_previous].to_i + 5
+              - if @techs[tech.id][:next_time]
+                - time_to_next_total = @techs[tech.id][:next_time] - (DateTime.parse("2010-01-19") + current_time.minutes)
+                - time_to_next_hours = time_to_next_total/3600
+                - time_to_next_min   = (time_to_next_hours%1)*60
+                - if time_to_next_min.to_i.to_s == "4"
+                  - time_to_next_min = 5
+                - time_to_next = time_to_next_hours.to_i.to_s + " hours " + time_to_next_min.to_i.to_s + " minutes"
+
+
+              - time_since_previous_total = @techs[tech.id][:time_since_previous]
+              - time_since_previous_hours = time_since_previous_total/60
+              - time_since_previous_min   = time_since_previous_total - (time_since_previous_hours * 60)
+              - time_since_previous = time_since_previous_hours.to_i.to_s + " hours " + time_since_previous_min.to_i.to_s + " minutes"
+              %th.empty_slot{:data => {:time_since_previous => time_since_previous, :time_to_next => time_to_next , :tech_id => tech.id}}
+      - current_time = current_time + 5
