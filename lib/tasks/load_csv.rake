@@ -38,5 +38,6 @@ def load_work_orders
     r = row.to_hash
     items << r.merge( { :created_at=>now, :updated_at=>now } )
   end
+  puts items.inspect
   result = WorkOrder.upsert_all(items)
 end

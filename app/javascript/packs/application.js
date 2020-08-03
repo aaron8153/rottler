@@ -7,6 +7,12 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+import jquery from 'jquery';
+$ = window.$ = window.jquery = jquery;
+
+import "bootstrap";
+import "../stylesheets/application"
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

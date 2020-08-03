@@ -26,15 +26,17 @@ ActiveRecord::Schema.define(version: 2020_07_31_065146) do
   end
 
   create_table "work_orders", force: :cascade do |t|
-    t.integer "technician_id"
-    t.integer "location_id"
     t.datetime "time"
-    t.time "duration"
+    t.integer "duration"
     t.float "price"
+    t.integer "location_id"
+    t.integer "technician_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_work_orders_on_location_id"
     t.index ["technician_id"], name: "index_work_orders_on_technician_id"
   end
 
+  add_foreign_key "work_orders", "locations"
+  add_foreign_key "work_orders", "technicians"
 end

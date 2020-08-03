@@ -1,0 +1,20 @@
+@import "~bootstrap/scss/bootstrap";
+
+th {
+  text-align: center;
+  &.empty_slot {
+
+  }
+  &.filled_slot {
+    background: #2E2F30;
+    color: #999999;
+    border-top: none;
+    &:hover {
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+  &.first_filled_slot {
+    border-top: 1px solid #dee2e6;
+  }
+}

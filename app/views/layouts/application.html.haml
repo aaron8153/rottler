@@ -1,0 +1,61 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Rottler Scheduling Assignment
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body
+
+    %nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      = link_to "Rottler", root_path, {:class => 'navbar-brand'}
+      %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
+        %span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        %ul.navbar-nav.mr-auto
+          - if current_page?(root_path)
+            %li.nav-item.active
+              = link_to "Schedule", root_path, {:class => 'nav-link'}
+          - else
+            %li.nav-item
+              = link_to "Schedule", root_path, {:class => 'nav-link'}
+          %li.nav-item
+            %a.nav-link{:href => "#"} Link
+
+    .container-fluid
+      = yield
+    #work_order_modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "work_order_modal", :role => "dialog", :tabindex => "-1"}
+      .modal-dialog{:role => "document"}
+        .modal-content
+          .modal-header
+            %h4#work_order_name.modal-title Work Order Name
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} ×
+          .modal-body
+            .container-fluid
+              .row
+                .col-3
+                  %h5 City:
+                .col-9
+                  %p#city
+              .row
+                .col-3
+                  %h5 Time:
+                .col-9
+                  %p#time Time
+              .row
+                .col-3
+                  %h5 Duration:
+                .col-9
+                  %p#duration Duration
+              .row
+                .col-3
+                  %h5 Price:
+                .col-9
+                  %p#price Price
+          .modal-footer
+            %button.btn.btn-secondary{"data-dismiss" => "modal", :type => "button"} Close
+= javascript_pack_tag 'work_orders'
