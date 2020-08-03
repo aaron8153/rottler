@@ -13,7 +13,6 @@
       %tr
         %th
           = Time.at(current_time.minutes).utc.strftime("%H:%M %p")
-
         - @technicians.each do |tech|
           - wo_found = false
           - if @techs[tech.id][:next_time].nil?
@@ -48,8 +47,6 @@
                 - if time_to_next_min.to_i.to_s == "4"
                   - time_to_next_min = 5
                 - time_to_next = time_to_next_hours.to_i.to_s + " hours " + time_to_next_min.to_i.to_s + " minutes"
-
-
               - time_since_previous_total = @techs[tech.id][:time_since_previous]
               - time_since_previous_hours = time_since_previous_total/60
               - time_since_previous_min   = time_since_previous_total - (time_since_previous_hours * 60)
