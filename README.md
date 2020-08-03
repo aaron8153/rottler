@@ -1,24 +1,43 @@
-# README
+# Rottler Code Challenge
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aaron Jacobs
 
-Things you may want to cover:
+aaron8153@gmail.com
 
-* Ruby version
+314.749.2604
 
-* System dependencies
+##Steps to run:
 
-* Configuration
+* Ruby version: 2.7.1
 
-* Database creation
+* Rails version: 6.0.3.2
 
-* Database initialization
+* bundle install
 
-* How to run the test suite
+* rake db:create
 
-* Services (job queues, cache servers, search engines, etc.)
+* rake db:migrate
 
-* Deployment instructions
+* rake load_csv
 
-* ...
+* Start the puma server - rails s
+
+* Visit http://0.0.0.0:3000
+
+
+##Brief Description
+After inspecting the csv files, I created models and their relationships to each other.
+I then wrote a rake task to import each type of object.
+I used upsert so that any duplicate entries would only update.
+This means that if a new csv file were to be introduced, it would not mess up any of the current data.
+
+
+Next, I created a table to display the data, using bootstrap.
+Normally, I would use variable way to do time comparisons. I used DateTime.parse("2010-01-19"), since all of the data was from that day alone.
+
+Using bootstrap modals and jquery, I populated the elements with the appropriate data. I then used jquery to display the modals on click.
+
+Keeping track of previous and next work orders was a challenge but I managed to keep track of them in order to display the technician availability.
+I made the time scale by 5m each row since that was the smallest unit I could break down the work orders into.
+
+I added visual feedback for time slots that occur durring a work order's duration.

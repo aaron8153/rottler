@@ -17,8 +17,8 @@ def load_locations
   CSV.foreach(Dir.pwd + '/lib/tasks/locations.csv', headers: true, :header_converters => :symbol) do |row|
     r = row.to_hash
     items << r.merge( { :created_at=>now, :updated_at=>now } )
-  end
-  result = Location.upsert_all items
+    end
+  Location.upsert_all items
 end
 
 def load_technicians
@@ -28,7 +28,7 @@ def load_technicians
     r = row.to_hash
     items << r.merge( { :created_at=>now, :updated_at=>now } )
   end
-  result = Technician.upsert_all(items)
+  Technician.upsert_all(items)
 end
 
 def load_work_orders
@@ -39,5 +39,5 @@ def load_work_orders
     items << r.merge( { :created_at=>now, :updated_at=>now } )
   end
   puts items.inspect
-  result = WorkOrder.upsert_all(items)
+  WorkOrder.upsert_all(items)
 end
