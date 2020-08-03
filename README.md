@@ -41,3 +41,6 @@ Keeping track of previous and next work orders was a challenge but I managed to 
 I made the time scale by 5m each row since that was the smallest unit I could break down the work orders into.
 
 I added visual feedback for time slots that occur durring a work order's duration.
+
+##Future Improvements
+I would probably find a good calendar scheduling gem, rather than rolling my own. I'd also prefer the table to be rotated so that time is on the x axis. I think this would be much simpler to code and would be more readable. I'd also make the page searchable by technician name.
